@@ -29,7 +29,7 @@ end
 
 class DkbWebBanking
   def initialize(enableLogging)
-    @webBankingUrl = 'https://banking.dkb.de/dkb/-?$javascript=disabled'
+    @webBankingUrl = 'https://www.dkb.de/banking/?$javascript=disabled'
     @enableLogging = enableLogging
     @agent = Mechanize.new
     @agent.follow_meta_refresh = false
@@ -44,7 +44,7 @@ class DkbWebBanking
 
   def logon(account, password)
     @agent.get(@webBankingUrl)
-    form = @agent.page.forms.first
+    form = @agent.page.form_with(id: 'login')
 
     form.field_with(name: 'j_username').value = account
     form.field_with(name: 'j_password').value = password
